@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/theassembler1/src/pacman_emulator/build",
+  "command": "/usr/bin/c++  -I/home/theassembler1/src/pacman_emulator/external/sdl2/include/SDL2 -I/home/theassembler1/src/pacman_emulator/external/sdl2_ttf/include/SDL2 -g -o CMakeFiles/a.out.dir/src/entry.cpp.o -c /home/theassembler1/src/pacman_emulator/src/entry.cpp",
+  "file": "/home/theassembler1/src/pacman_emulator/src/entry.cpp"
+}
+]
