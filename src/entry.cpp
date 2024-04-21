@@ -64,16 +64,16 @@ int main() {
 
     widgeter.startMenu();
     if(widgeter.button(mouse_position, "Run", left_mouse_is_pressed, left_mouse_was_pressed)) {
-      std::cout << "Run" << std::endl;
+      std::cout << "button \"Run\"" << std::endl;
     }
     if(widgeter.button(mouse_position, "Stop", left_mouse_is_pressed, left_mouse_was_pressed)) {
-      std::cout << "Stop" << std::endl;
+      std::cout << "button \"Stop\"" << std::endl;
     }
     if(widgeter.button(mouse_position, "Step 1", left_mouse_is_pressed, left_mouse_was_pressed)) {
-      std::cout << "Step 1" << std::endl;
+      std::cout << "button \"Step 1\"" << std::endl;
     }
     if(widgeter.button(mouse_position, "Step 10", left_mouse_is_pressed, left_mouse_was_pressed)) {
-      std::cout << "Step 10" << std::endl;
+      std::cout << "button \"Step 10\"" << std::endl;
     }
     widgeter.endMenu();
 
