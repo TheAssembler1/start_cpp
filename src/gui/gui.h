@@ -36,8 +36,8 @@ namespace GUI {
 
   class Widgeter {
     public:
-      Widgeter(SDL_Renderer* renderer, Position start_widget_position, int padding, int font_size) 
-        : renderer(renderer), padding(padding), font_size(font_size) {
+      Widgeter(SDL_Renderer* renderer, Position start_widget_position, int margin, int padding, int font_size) 
+        : renderer(renderer), margin(margin), padding(padding), font_size(font_size) {
         font = TTF_OpenFont("assets/fonts/raleway/Raleway-Regular.ttf", font_size);
         
         if(!font) {
@@ -46,47 +46,74 @@ namespace GUI {
           std::cout << "succesfully created font" << std::endl;
         }
 
+        // FIXME: set these threw the constructor and mutable methods
+        text_color = SDL_Color{255, 255, 255, 255};
+        border_color = SDL_Color{0, 0, 255, 255};
+        foreground_color = SDL_Color{255, 255, 255, 255};
+        background_color = SDL_Color{50, 50, 50, 255};
+        hovered_color= SDL_Color{100, 100, 100, 255};
+        pressed_color = SDL_Color{150, 150, 150, 255};
+
+
         cur_position = start_widget_position;
         start_position = cur_position;
-
-        cur_color = SDL_Color{255, 255, 255, 255};
-        start_color = cur_color;
 
         cur_direction = VERTICAL;
         start_direction = cur_direction;
       }
    
       void startWidgeter() {
-        this->cur_color = this->start_color;
         this->cur_position = this->start_position;
         this->cur_direction = this->start_direction;
-
-        // adjust for initial padding
         this->cur_position.x += this->padding;
         this->cur_position.y += this->padding;
       }
 
-      void box(const Dimension dimension);
-      void textBox(const bool draw_border, const std::string text);
-      bool button(const Position mouse_position, const std::string text);
-      
-      void setDrawColor(SDL_Color color);
-      void translateCurXPosition(const int width); 
-      void translateCurYPosition(const int height); 
+      void startMenu() {
+        this->cur_direction = HORIZONTAL;
+        this->in_menu = true;
+        
+        // have to reset the x position to value before menu creation
+        this->before_menu_x = this->cur_position.x;
+      }
 
-      Transform drawRect(const Transform tf);
-      Transform drawText(const bool draw_border, const Position position, const int font_size, const std::string text);
+      void endMenu() {
+        this->in_menu = false;
+        this->cur_direction = VERTICAL;
+
+        this->cur_position.x = this->before_menu_x;
+        this->cur_position.y = this->after_menu_y;
+      }
+
+      void box(const Dimension dimension);
+      void textBox(const bool draw_border, const bool fill_border, const std::string text);
+      bool button(const Position mouse_position, const std::string text, const bool cur_pressed, const bool just_released);
+      void adjustCurPosition(const Transform tf);
+      void setDrawColor(const SDL_Color color);
+      void drawRect(const Transform tf);
+      void drawFillRect(const Transform tf);
+      void drawText(const Transform tf, const std::string text);
 
     private:
       SDL_Renderer* renderer;
       TTF_Font* font;
 
       const int padding;
+      const int margin;
       const int font_size;
-      
-      SDL_Color cur_color;
-      SDL_Color start_color;
+  
+      bool in_menu = false;
 
+      int before_menu_x;
+      int after_menu_y;
+  
+      SDL_Color text_color;
+      SDL_Color border_color;
+      SDL_Color foreground_color;
+      SDL_Color background_color;
+      SDL_Color hovered_color;
+      SDL_Color pressed_color;
+      
       Position cur_position;
       Position start_position;
 
